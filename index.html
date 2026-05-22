@@ -851,10 +851,8 @@
 
     function getInitialAnniversaries() {
       return [
-        { id: '1', name: '我们的相识日', date: '2018-09-01', type: 'friendship', description: '大学开学第一天，我们在宿舍相遇，从此开启了这段美好的友谊' },
-        { id: '2', name: '第一次旅行', date: '2019-05-01', type: 'travel', description: '五一假期一起去了厦门，在海边留下了很多美好的回忆' },
-        { id: '3', name: '毕业纪念日', date: '2022-06-20', type: 'important', description: '我们毕业了，但友谊永远不会毕业' },
-        { id: '4', name: '友谊五周年', date: '2023-09-01', type: 'friendship', description: '五年时光，我们一起笑过哭过，这份友谊值得珍藏' }
+        { id: '1', name: '相识纪念日', date: '2011-09-01', type: 'friendship', description: '第一次转学来见到你们，开启了我们的友谊之旅' },
+        { id: '2', name: '15周年纪念日', date: '2026-09-01', type: 'friendship', description: '我们相识15周年啦，友谊长存！' }
       ];
     }
 
@@ -917,7 +915,7 @@
         return { number: days, label: '天后', isToday: false };
       } else {
         const passed = Math.abs(days);
-        return { number: passed, label: '天前', isToday: false, hasPassed: true };
+        return { number: passed, label: '天', isToday: false, hasPassed: true };
       }
     }
 
