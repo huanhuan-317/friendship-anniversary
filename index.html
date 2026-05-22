@@ -943,7 +943,12 @@
 
     function renderCards() {
       const grid = document.getElementById('cardsGrid');
-      const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
+      let data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
+      
+      if (data.length === 0) {
+        data = getInitialAnniversaries();
+        saveAnniversaries(data);
+      }
       
       if (data.length === 0) {
         grid.innerHTML = `
@@ -970,7 +975,12 @@
 
     function renderGallery() {
       const grid = document.getElementById('galleryGrid');
-      const photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
+      let photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
+      
+      if (photos.length === 0) {
+        photos = getInitialPhotos();
+        savePhotos(photos);
+      }
       
       grid.innerHTML = '';
       
