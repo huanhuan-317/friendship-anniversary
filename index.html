@@ -838,9 +838,6 @@
   </div>
 
   <script>
-    const ANNIVERSARY_KEY = 'friendship_anniversary';
-    const PHOTOS_KEY = 'friendship_photos';
-    
     const typeLabels = {
       friendship: '友谊纪念日',
       birthday: '生日',
@@ -848,6 +845,11 @@
       important: '重要时刻',
       other: '其他'
     };
+
+    const ANNIVERSARY_KEY = 'friendship_anniversary';
+    const PHOTOS_KEY = 'friendship_photos';
+
+    const GITHUB_REPO = 'huanhuan-317/friendship-anniversary';
 
     function getInitialAnniversaries() {
       return [
@@ -858,37 +860,13 @@
 
     function getInitialPhotos() {
       return [
-        { id: '1', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20young%20women%20friends%20laughing%20together%20on%20college%20campus%20sunny%20day%20warm%20atmosphere&image_size=landscape_4_3', title: '校园时光', date: '2018-09-01' },
-        { id: '2', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20friends%20traveling%20by%20the%20sea%20Xiamen%20beach%20sunset%20happy%20memories&image_size=landscape_4_3', title: '厦门海边', date: '2019-05-01' },
-        { id: '3', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20graduates%20wearing%20graduation%20gowns%20throwing%20caps%20in%20air%20celebration&image_size=landscape_4_3', title: '毕业快乐', date: '2022-06-20' },
-        { id: '4', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20friends%20having%20dinner%20together%20celebration%20cake%20candles%20warm%20lighting&image_size=landscape_4_3', title: '五周年庆祝', date: '2023-09-01' },
-        { id: '5', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20friends%20hiking%20mountain%20top%20scenic%20view%20adventure%20happy&image_size=landscape_4_3', title: '登山之旅', date: '2021-10-01' },
-        { id: '6', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20friends%20christmas%20party%20decorations%20gifts%20cozy%20warm%20atmosphere&image_size=landscape_4_3', title: '圣诞聚会', date: '2022-12-25' }
+        { id: '1', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=cinema%20movie%20screen%20showing%20thai%20temple%20golden%20buddha%20chinese%20text%20"dear%20you"%20romantic%20atmosphere&image_size=landscape_4_3', title: '一起看给阿嬷的情书', date: '2026-05-21' },
+        { id: '2', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20hands%20holding%20fried%20sausages%20on%20sticks%20street%20food%20night%20market%20delicious%20snack%20warm%20lighting&image_size=landscape_4_3', title: '一起吃淀粉肠', date: '2026-05-21' }
       ];
-    }
-
-    function getAnniversaries() {
-      const stored = localStorage.getItem(ANNIVERSARY_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-      const initial = getInitialAnniversaries();
-      saveAnniversaries(initial);
-      return initial;
     }
 
     function saveAnniversaries(data) {
       localStorage.setItem(ANNIVERSARY_KEY, JSON.stringify(data));
-    }
-
-    function getPhotos() {
-      const stored = localStorage.getItem(PHOTOS_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-      const initial = getInitialPhotos();
-      savePhotos(initial);
-      return initial;
     }
 
     function savePhotos(data) {
@@ -965,7 +943,7 @@
 
     function renderCards() {
       const grid = document.getElementById('cardsGrid');
-      const data = getAnniversaries();
+      const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
       
       if (data.length === 0) {
         grid.innerHTML = `
@@ -992,7 +970,7 @@
 
     function renderGallery() {
       const grid = document.getElementById('galleryGrid');
-      const photos = getPhotos();
+      const photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
       
       grid.innerHTML = '';
       
@@ -1040,7 +1018,7 @@
     }
 
     function openDetailModal(id) {
-      const data = getAnniversaries();
+      const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
       const item = data.find(d => d.id === id);
       
       if (!item) return;
@@ -1071,7 +1049,7 @@
     }
 
     function deleteItem(id) {
-      const data = getAnniversaries();
+      const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
       const filtered = data.filter(d => d.id !== id);
       saveAnniversaries(filtered);
       renderCards();
@@ -1079,7 +1057,7 @@
     }
 
     function editItem(id) {
-      const data = getAnniversaries();
+      const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
       const item = data.find(d => d.id === id);
       
       if (!item) return;
@@ -1098,7 +1076,7 @@
     }
 
     function openPhotoModal(id) {
-      const photos = getPhotos();
+      const photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
       const photo = photos.find(p => p.id === id);
       
       if (!photo) return;
@@ -1145,7 +1123,7 @@
         e.preventDefault();
         
         const id = e.target.dataset.editId || Date.now().toString();
-        const data = getAnniversaries();
+        const data = JSON.parse(localStorage.getItem(ANNIVERSARY_KEY) || '[]');
         
         const item = {
           id,
@@ -1173,7 +1151,7 @@
         e.preventDefault();
         
         const id = Date.now().toString();
-        const photos = getPhotos();
+        const photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
         
         const photo = {
           id,
