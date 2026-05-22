@@ -860,8 +860,8 @@
 
     function getInitialPhotos() {
       return [
-        { id: '1', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=cinema%20movie%20screen%20showing%20thai%20temple%20golden%20buddha%20chinese%20text%20"dear%20you"%20romantic%20atmosphere&image_size=landscape_4_3', title: '一起看给阿嬷的情书', date: '2026-05-21' },
-        { id: '2', url: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=three%20hands%20holding%20fried%20sausages%20on%20sticks%20street%20food%20night%20market%20delicious%20snack%20warm%20lighting&image_size=landscape_4_3', title: '一起吃淀粉肠', date: '2026-05-21' }
+        { id: '1', url: 'https://picsum.photos/seed/movie/600/400', title: '一起看给阿嬷的情书', date: '2026-05-21' },
+        { id: '2', url: 'https://picsum.photos/seed/food/600/400', title: '一起吃淀粉肠', date: '2026-05-21' }
       ];
     }
 
@@ -975,16 +975,17 @@
 
     function renderGallery() {
       const grid = document.getElementById('galleryGrid');
-      let photos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
+      const initialPhotos = getInitialPhotos();
+      let storedPhotos = JSON.parse(localStorage.getItem(PHOTOS_KEY) || '[]');
       
-      if (photos.length === 0) {
-        photos = getInitialPhotos();
-        savePhotos(photos);
+      if (storedPhotos.length === 0 || storedPhotos.length !== initialPhotos.length) {
+        savePhotos(initialPhotos);
+        storedPhotos = initialPhotos;
       }
       
       grid.innerHTML = '';
       
-      photos.forEach(photo => {
+      storedPhotos.forEach(photo => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
         item.dataset.id = photo.id;
