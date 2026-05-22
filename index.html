@@ -917,10 +917,7 @@
         return { number: days, label: '天后', isToday: false };
       } else {
         const passed = Math.abs(days);
-        const date = new Date(dateStr);
-        date.setFullYear(date.getFullYear() + 1);
-        const nextYearDays = Math.ceil((date - new Date().setHours(0, 0, 0, 0)) / (1000 * 60 * 60 * 24));
-        return { number: nextYearDays, label: `天后（已过去${passed}天）`, isToday: false, hasPassed: true };
+        return { number: passed, label: '天前', isToday: false, hasPassed: true };
       }
     }
 
